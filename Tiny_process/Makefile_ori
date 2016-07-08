@@ -1,0 +1,44 @@
+CC=gcc
+CFLAGS=-I./include -I../common -O2 
+LD=-lpthread
+HPATH=../common
+SRC=src
+INCLUDE=include
+
+all: tiny_iter tiny_process tiny_select tiny_poll
+
+tiny_iter: tiny_iter.o do_task.o csapp.o
+	$(CC) -o tiny_iter tiny_iter.o do_task.o csapp.o $(LD)
+
+tiny_process: tiny_process.o do_task.o csapp.o
+	$(CC) -o tiny_process tiny_process.o do_task.o csapp.o $(LD)
+
+tiny_select: tiny_select.o do_task.o csapp.o
+	$(CC) -o tiny_select tiny_select.o do_task.o csapp.o $(LD)
+
+tiny_poll: tiny_poll.o do_task.o csapp.o
+	$(CC) -o tiny_poll tiny_poll.o do_task.o csapp.o $(LD)
+
+tiny_poll.o: $(SRC)/tiny_poll.c
+	$(CC) -c $(SRC)/tiny_poll.c $(CFLAGS) 
+
+tiny_iter.o: $(SRC)/tiny_iter.c
+	$(CC) -c $(SRC)/tiny_iter.c $(CFLAGS) 
+
+tiny_select.o: $(SRC)/tiny_select.c
+	$(CC) -c $(SRC)/tiny_select.c $(CFLAGS)
+
+tiny_process.o: $(SRC)/tiny_process.c
+	$(CC) -c $(SRC)/tiny_process.c $(CFLAGS)
+
+do_task.o: $(SRC)/do_task.c
+	$(CC) -c $(SRC)/do_task.c $(CFLAGS)
+
+csapp.o: $(HPATH)/csapp.c
+	$(CC) -c $(HPATH)/csapp.c $(CFLAGS)
+
+clean:
+	rm -rf tiny_*
+	rm -rf *.o
+
+
